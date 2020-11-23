@@ -1,17 +1,18 @@
 package config
 
-import (
-	"github.com/spf13/viper"
-)
+import "github.com/spf13/viper"
 
 type config struct {
 	Server struct {
 		URL  string
 		Port string
 	}
+	Database struct {
+		File string
+	}
 }
 
-// Config - variable containing server configuration
+// C - variable containing server configuration
 var C config
 
 // ReadConfig - reads server configuration
