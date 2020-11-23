@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bufio"
+	"encoding/csv"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/ramrodo/golang-bootcamp-2020/config"
 	"github.com/ramrodo/golang-bootcamp-2020/usecase/repository"
@@ -10,9 +13,15 @@ import (
 
 func main() {
 	config.ReadConfig()
-	// fmt.Printf("Server listen at %s:%s\n", config.C.Server.URL, config.C.Server.Port)
+	csvFile, err := os.Open(config.C.Database.File)
 
-	all, err := repository.FindAll()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	reader := csv.NewReader(bufio.NewReader(csvFile))
+
+	all, err := repository.FindAll(reader)
 
 	if err != nil {
 		log.Fatalln(err)
