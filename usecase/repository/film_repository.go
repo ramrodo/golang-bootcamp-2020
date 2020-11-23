@@ -8,7 +8,7 @@ import (
 
 // FilmRepository - interface
 type FilmRepository interface {
-	FindAll() ([]model.Film, error)
+	FindAll(*csv.Reader) ([]model.Film, error)
 }
 
 // FindAll - reads CSV file and returns an array of Films
