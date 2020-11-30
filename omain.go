@@ -10,7 +10,30 @@ func main() {
 	// fn_array_slice()
 	// fn_if()
 	// fn_maps()
-	fn_switch()
+	// fn_switch()
+	// fn_structures()
+}
+
+func fn_structures() {
+	type User struct {
+		Name  string
+		Email string
+		age   int
+	}
+
+	rob := User{"rob", "rob@lco.dev", 34} // Most used (without pointers or references)
+	fmt.Printf("%+v\n", rob)
+	fmt.Printf("%v\n", rob.Email)
+
+	var sam = new(User) // new creates a reference...?
+	sam.Name = "sam"
+	sam.Email = "sam@lco.dev"
+	sam.age = 22
+	fmt.Printf("%+v\n", sam) // &{Name:sam Email:sam@lco.dev age:22} => & -> reference of the object
+
+	var tobby = &User{"tobby", "tobby@lco.dev", 22} // & -> to create a reference to that structure
+	fmt.Printf("%+v\n", tobby)                      // &{Name:tobby Email:tobby@lco.dev age:22}
+
 }
 
 func fn_switch() {
@@ -53,10 +76,13 @@ func fn_maps() {
 		fmt.Printf("Score of %v is %v\n", k, v)
 	}
 
-	_, found := score["k2"]
-	fmt.Println("found:", found)
+	value, found := score["k2"]
+	fmt.Printf("found: %v, value: %v\n", found, value)
 
-	// You can also declare and initialize a new map in the same line with this syntax.
+	value, found = score["rodo"]
+	fmt.Printf("found: %v, value: %v\n", found, value)
+
+	// You can also declare and initialize a new map in the same line with this syntax. *****
 	n := map[string]int{"foo": 1, "bar": 2}
 	fmt.Println("map:", n)
 }
