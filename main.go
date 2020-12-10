@@ -14,6 +14,7 @@
 // func main() {
 // 	config.ReadConfig()
 // 	csvFile, err := os.Open(config.C.Database.File)
+// => Add defer
 
 // 	if err != nil {
 // 		log.Fatalln(err)

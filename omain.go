@@ -5,13 +5,52 @@ import (
 	"math"
 )
 
-func main() {
-	// fn_fors()
-	// fn_array_slice()
-	// fn_if()
-	// fn_maps()
-	// fn_switch()
-	// fn_structures()
+// import (
+// 	"fmt"
+// 	"math"
+// )
+
+// func main() {
+// fn_fors()
+// fn_array_slice()
+// fn_if()
+// fn_maps()
+// fn_switch()
+// fn_structures()
+// fn_pointers()
+// fn_interfaces()
+// }
+
+type T struct {
+	S string
+}
+
+// This method means type T implements the interface I,
+// but we don't need to explicitly declare that it does so.
+func (t T) M() {
+	fmt.Println(t.S)
+}
+
+func fn_interfaces() {
+	type I interface {
+		M()
+	}
+
+	var i I = T{"hello"}
+	i.M()
+}
+
+func fn_pointers() {
+	i, j := 42, 2701
+
+	p := &i         // point to i
+	fmt.Println(*p) // read i through the pointer
+	*p = 21         // set i through the pointer
+	fmt.Println(i)  // see the new value of i
+
+	p = &j         // point to j
+	*p = *p / 37   // divide j through the pointer
+	fmt.Println(j) // see the new value of j
 }
 
 func fn_structures() {
