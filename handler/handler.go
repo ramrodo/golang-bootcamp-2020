@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"gopkg.in/resty.v1"
+
 	"github.com/gorilla/mux"
 	"github.com/ramrodo/golang-bootcamp-2020/model"
 	"github.com/ramrodo/golang-bootcamp-2020/repository"
@@ -37,7 +39,22 @@ func FilmIndex(w http.ResponseWriter, r *http.Request) {
 func FilmShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	filmID := vars["filmID"]
-	fmt.Fprintln(w, "Film show:", filmID)
+
+	client := resty.New()
+
+	var film model.Film
+	resp, err := client.R().Get(fmt.Sprintf("https://ghibliapi.herokuapp.com/films/%s", filmID))
+	json.Unmarshal(resp.Body(), &film)
+
+	if err != nil {
+		panic(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(resp.StatusCode())
+	if err := json.NewEncoder(w).Encode(film); err != nil {
+		panic(err)
+	}
 }
 
 // FilmCreate .

@@ -8,8 +8,8 @@ type Film struct {
 	Description string `json:"description"`
 	Director    string `json:"director"`
 	Producer    string `json:"producer"`
-	ReleaseDate string `json:"releaseDate"`
-	RtScore     string `json:"rtScore"`
+	ReleaseDate string `json:"release_date"`
+	RtScore     string `json:"rt_score"`
 }
 
 // Films .
