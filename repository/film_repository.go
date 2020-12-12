@@ -51,9 +51,8 @@ func FindAll() ([]model.Film, error) {
 	return films, nil
 }
 
-// Create .
+// Create - saves a film into the CSV file
 func Create(film model.Film) (model.Film, error) {
-	// FIXME: How to share the reader between handlers/repository functions
 	csvFile, err := os.OpenFile(config.C.Database.File, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	defer csvFile.Close()
 
@@ -72,7 +71,7 @@ func Create(film model.Film) (model.Film, error) {
 	return film, nil
 }
 
-// Show .
+// Show - makes a request to the upstream API to get the film details
 func Show(filmID string) (model.Film, error) {
 	client := resty.New()
 

@@ -13,12 +13,12 @@ import (
 	"github.com/ramrodo/golang-bootcamp-2020/repository"
 )
 
-// Index .
+// Index - prints a hello message for API index
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
 }
 
-// FilmIndex .
+// FilmIndex - returns all the films
 func FilmIndex(w http.ResponseWriter, r *http.Request) {
 	films, err := repository.FindAll()
 
@@ -33,7 +33,7 @@ func FilmIndex(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// FilmShow .
+// FilmShow - returns the film details requested
 func FilmShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	filmID := vars["filmID"]
@@ -51,12 +51,11 @@ func FilmShow(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// FilmCreate .
+// FilmCreate - returns the film created
 func FilmCreate(w http.ResponseWriter, r *http.Request) {
 	var film model.Film
 
-	// This is a good way to protect against malicious attacks on your server.
-	// Imagine if someone wanted to send you 500GBs of json!
+	// This is a good way to protect against malicious attacks on your server limiting JSON size
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 
 	if err != nil {

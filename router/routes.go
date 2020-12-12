@@ -6,7 +6,7 @@ import (
 	"github.com/ramrodo/golang-bootcamp-2020/handler"
 )
 
-// Route .
+// Route struct
 type Route struct {
 	Name        string
 	Method      string
@@ -14,7 +14,7 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 }
 
-// Routes .
+// Routes array
 type Routes []Route
 
 var routes = Routes{

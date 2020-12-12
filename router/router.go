@@ -7,7 +7,7 @@ import (
 	"github.com/ramrodo/golang-bootcamp-2020/handler"
 )
 
-// NewRouter .
+// NewRouter - returns a router object with routes
 func NewRouter() *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)

@@ -1,6 +1,6 @@
 package model
 
-// Film - definition
+// Film - struct
 // By adding struct tags you can control exactly what an how your struct will be marshalled to JSON
 type Film struct {
 	ID          string `json:"id"`
@@ -12,5 +12,5 @@ type Film struct {
 	RtScore     string `json:"rt_score"`
 }
 
-// Films .
+// Films array
 type Films []Film
