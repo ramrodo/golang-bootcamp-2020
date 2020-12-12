@@ -3,17 +3,15 @@ package repository
 import (
 	"bufio"
 	"encoding/csv"
+	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 
 	"github.com/ramrodo/golang-bootcamp-2020/config"
 	"github.com/ramrodo/golang-bootcamp-2020/model"
+	"gopkg.in/resty.v1"
 )
-
-// FilmRepository - interface
-type FilmRepository interface {
-	FindAll(*csv.Reader) ([]model.Film, error)
-}
 
 // FindAll - reads CSV file and returns an array of Films
 func FindAll() ([]model.Film, error) {
@@ -53,8 +51,8 @@ func FindAll() ([]model.Film, error) {
 	return films, nil
 }
 
-// CreateFilm .
-func CreateFilm(film model.Film) model.Film {
+// Create .
+func Create(film model.Film) (model.Film, error) {
 	// FIXME: How to share the reader between handlers/repository functions
 	csvFile, err := os.OpenFile(config.C.Database.File, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	defer csvFile.Close()
@@ -66,9 +64,25 @@ func CreateFilm(film model.Film) model.Film {
 	w := csv.NewWriter(csvFile)
 	defer w.Flush()
 
-	if err := w.Write([]string{film.ID, film.ID, film.Title, film.Description, film.Director, film.Producer, film.ReleaseDate, film.RtScore}); err != nil {
+	if err := w.Write([]string{film.ID, film.Title, film.Description, film.Director, film.Producer, film.ReleaseDate, film.RtScore}); err != nil {
 		log.Fatalln("error writing record to file", err)
+		return model.Film{}, err
 	}
 
-	return film
+	return film, nil
+}
+
+// Show .
+func Show(filmID string) (model.Film, error) {
+	client := resty.New()
+
+	var film model.Film
+	resp, err := client.R().Get(fmt.Sprintf("https://ghibliapi.herokuapp.com/films/%s", filmID))
+	json.Unmarshal(resp.Body(), &film)
+
+	if err != nil {
+		return film, err
+	}
+
+	return film, nil
 }
