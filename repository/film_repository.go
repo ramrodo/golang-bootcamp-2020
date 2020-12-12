@@ -13,6 +13,8 @@ import (
 	"gopkg.in/resty.v1"
 )
 
+const filmEndpoint string = "films"
+
 // FindAll - reads CSV file and returns an array of Films
 func FindAll() ([]model.Film, error) {
 	csvFile, err := os.Open(config.C.Database.File)
@@ -75,8 +77,9 @@ func Create(film model.Film) (model.Film, error) {
 func Show(filmID string) (model.Film, error) {
 	client := resty.New()
 
+	resp, err := client.R().Get(fmt.Sprintf("%s/%s/%s", config.C.API.URL, filmEndpoint, filmID))
+
 	var film model.Film
-	resp, err := client.R().Get(fmt.Sprintf("https://ghibliapi.herokuapp.com/films/%s", filmID))
 	json.Unmarshal(resp.Body(), &film)
 
 	if err != nil {

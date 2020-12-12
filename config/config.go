@@ -10,6 +10,9 @@ type config struct {
 	Database struct {
 		File string
 	}
+	API struct {
+		URL string
+	}
 }
 
 // C - variable containing server configuration
