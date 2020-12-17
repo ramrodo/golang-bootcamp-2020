@@ -10,6 +10,9 @@ type config struct {
 	Database struct {
 		File string
 	}
+	API struct {
+		URL string
+	}
 }
 
 // C - variable containing server configuration
@@ -17,8 +20,8 @@ var C config
 
 // ReadConfig - reads server configuration
 func ReadConfig() {
+	viper.AddConfigPath(".")
 	viper.SetConfigName("config")
-	viper.AddConfigPath("config")
 
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)

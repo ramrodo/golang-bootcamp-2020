@@ -1,32 +1,19 @@
 package main
 
 import (
-	"bufio"
-	"encoding/csv"
 	"fmt"
 	"log"
-	"os"
+	"net/http"
 
 	"github.com/ramrodo/golang-bootcamp-2020/config"
-	"github.com/ramrodo/golang-bootcamp-2020/usecase/repository"
+	"github.com/ramrodo/golang-bootcamp-2020/router"
 )
 
 func main() {
 	config.ReadConfig()
-	csvFile, err := os.Open(config.C.Database.File)
 
-	if err != nil {
-		log.Fatalln(err)
-	}
+	router := router.NewRouter()
 
-	reader := csv.NewReader(bufio.NewReader(csvFile))
-
-	all, err := repository.FindAll(reader)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	fmt.Println("Title:", all[0].Title)
-	fmt.Println("Description:", all[0].Description)
+	fmt.Printf("Listening on: %s:%s\n", config.C.Server.URL, config.C.Server.Port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", config.C.Server.Port), router))
 }
